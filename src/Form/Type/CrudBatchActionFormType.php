@@ -3,6 +3,10 @@
 namespace EasyCorp\Bundle\EasyAdminBundle\Form\Type;
 
 use EasyCorp\Bundle\EasyAdminBundle\Config\ConfigManager;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\ActionDto;
+use EasyCorp\Bundle\EasyAdminBundle\Factory\ActionFactory;
+use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -16,6 +20,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CrudBatchActionFormType extends AbstractType
 {
+
+    /**
+     * @var ActionFactory
+     */
+    private $actionFactory;
+
+    public function __construct(ActionFactory  $actionFactory)
+    {
+        $this->actionFactory = $actionFactory;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -36,15 +51,7 @@ class CrudBatchActionFormType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        /*
-        $entityConfig = $this->configManager->getEntityConfig($options['entity']);
-        $disabledActions = $entityConfig['disabled_actions'];
-        $batchActions = $entityConfig['list']['batch_actions'];
-
-        $view->vars['batch_actions'] = array_filter($batchActions, function ($batchAction) use ($disabledActions) {
-            return !\in_array($batchAction['name'], $disabledActions, true);
-        });
-        */
+        $view->vars['batch_actions'] = $this->actionFactory->processGlobalActions()->getBatchActions();
     }
 
     /**
@@ -54,7 +61,7 @@ class CrudBatchActionFormType extends AbstractType
     {
         // This input is not intended to be rendered
         // It's used to map the clicked batch button
-        //$view->children['name']->setRendered()->setMethodRendered();
+        $view->children['crudAction']->setRendered()->setMethodRendered();
     }
 
     /**
@@ -62,7 +69,6 @@ class CrudBatchActionFormType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        //$resolver->setRequired('entity');
         $resolver->setDefaults([
             'allow_extra_fields' => true,
         ]);
