@@ -20,7 +20,9 @@
     {% block global_actions %}
         <div class="global-actions">
             {% for action in global_actions %}
-                {{ include(action.templatePath, { action: action }, with_context = false) }}
+                {% if not action.isBatchAction %}
+                    {{ include(action.templatePath, { action: action }, with_context = false) }}
+                {% endif %}
             {% endfor %}
         </div>
     {% endblock global_actions %}
