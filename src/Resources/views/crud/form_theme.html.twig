@@ -480,7 +480,7 @@
     {{ form_widget(form.entityIds) }}
     <button type="button" class="btn btn-link deselect-batch-button">{{ 'action.deselect'|trans([], 'EasyAdminBundle') }}</button>
     {% for action in batch_actions %}
-        <button name="{{ form.crudAction.vars.full_name }}" value="{{ action.name }}"
+        <button name="{{ form.crudAction.vars.full_name }}" value="{{ action.crudActionName }}"
                 class="ask-confirm-batch-button {{ action.cssClass }}" {% for name, value in action.htmlAttributes %}{{ name }}="{{ value|e('html_attr') }}" {% endfor %}>
             <span class="btn-label">
                 {%- if action.icon %}<i class="action-icon {{ action.icon }}"></i> {% endif -%}
