@@ -119,7 +119,6 @@ abstract class AbstractCrudController extends AbstractController implements Crud
                 'ids' => $entityIds,
                 'context' => $context
             ]);
-
         }
 
         if (null !== $referrer = $context->getReferrer()) {

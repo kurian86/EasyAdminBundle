@@ -63,8 +63,12 @@ final class ActionFactory
         $entityDto->setActions(ActionCollection::new($entityActions));
     }
 
-    public function processGlobalActions(ActionConfigDto $actionsDto): ActionCollection
+    public function processGlobalActions(ActionConfigDto $actionsDto = null): ActionCollection
     {
+        if ($actionsDto === null) {
+            $actionsDto = $this->adminContextProvider->getContext()->getCrud()->getActionsConfig();
+        }
+
         $currentPage = $this->adminContextProvider->getContext()->getCrud()->getCurrentPage();
         $globalActions = [];
         foreach ($actionsDto->getActions()->all() as $actionDto) {

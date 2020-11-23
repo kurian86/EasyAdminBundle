@@ -29,12 +29,10 @@
             <div class="batch-actions" style="display: none">
                 {% form_theme batch_form with ea.crud.formThemes only %}
                 {{ form(batch_form) }}
-
             </div>
         {% endif %}
     {% endblock %}
 {% endblock page_actions %}
-
 
 {% block main %}
     {# sort can be multiple; let's consider the sorting field the first one #}
@@ -327,7 +325,7 @@
                 }
 
                 $input.val(ids.join(','));
-                $content.find('.content-header-title > .title').html(0 === ids.length ? titleContent : '');
+                // $content.find('.content-header-title > .title').html(0 === ids.length ? titleContent : '');
             });
 
             let modalTitle = $('#batch-action-confirmation-title');

@@ -478,7 +478,7 @@
 {# EasyAdminBatch form type #}
 {% block ea_batch_action_widget %}
     {{ form_widget(form.entityIds) }}
-    <button type="button" class="btn btn-link deselect-batch-button">{{ 'action.deselect'|trans(domain = 'EasyAdminBundle') }}</button>
+    <button type="button" class="btn btn-link deselect-batch-button">{{ 'action.deselect'|trans([], 'EasyAdminBundle') }}</button>
     {% for action in batch_actions %}
         <button name="{{ form.crudAction.vars.full_name }}" value="{{ action.name }}"
                 class="ask-confirm-batch-button {{ action.cssClass }}" {% for name, value in action.htmlAttributes %}{{ name }}="{{ value|e('html_attr') }}" {% endfor %}>
